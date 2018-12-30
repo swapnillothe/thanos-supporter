@@ -1,0 +1,23 @@
+{
+  "name": "thanos",
+  "version": "1.0.0",
+  "description": "",
+  "main": "script.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "thanos-supporter"
+  },
+  "author": "swapnillothe",
+  "license": "ISC",
+  "dependencies": {
+    "fs": "0.0.1-security",
+    "grasp": "^0.6.0",
+    "shelljs": "^0.8.3"
+  }
+}
