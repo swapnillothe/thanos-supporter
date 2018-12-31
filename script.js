@@ -2,32 +2,42 @@ const fs = require('fs');
 const cmd = require('shelljs');
 cmd.exec(`grasp -j var-dec ${process.argv[2]} > temp.json`)
 const jsonData = fs.readFileSync('temp.json', 'utf8');
-
 const parsedData = JSON.parse(jsonData);
 
 const calculateStartEndDiff = function (data) {
   return data.loc.end.line - data.loc.start.line;
 }
 
-const funcLengthCreater = function (name, funcLength) {
-  return { name, funcLength };
+const getNoOfParams = function (data) {
+  let funcParamsNo = data.init.params.length;
+  return funcParamsNo;
 }
 
-const getFuncLength = function (data) {
+const funcDetailCreater = function (name, funcLength, funcParamsNo) {
+  return { name, funcLength, funcParamsNo };
+}
+
+const getFuncDetail = function (data) {
   let name = data.id.name;
   let funcLength = calculateStartEndDiff(data);
-  return funcLengthCreater(name, funcLength);
+  let funcParamsNo = getNoOfParams(data);
+  return funcDetailCreater(name, funcLength, funcParamsNo);
 }
 
 const isFunction = function (data) {
   return data.init.type == 'FunctionExpression';
 }
 
-const getFuncAndLength = function () {
-  let funcsDetails = parsedData.filter(isFunction);
-  let funcsLength = funcsDetails.map(getFuncLength);
-  return funcsLength;
+const addFuncsDetail = function (data) {
+  data.funcsDetails = data.map(getFuncDetail);
+  return data;
 }
 
-console.log(getFuncAndLength());
+const getFuncsDetail = function () {
+  let funcData = parsedData.filter(isFunction);
+  let data = addFuncsDetail(funcData);
+  return data.funcsDetails;
+}
+
+console.log(getFuncsDetail());
 cmd.rm('temp.json')
