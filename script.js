@@ -1,6 +1,4 @@
 const fs = require('fs');
-const cmd = require('shelljs');
-cmd.exec(`grasp -j var-dec ${process.argv[2]} > temp.json`)
 const jsonData = fs.readFileSync('temp.json', 'utf8');
 const parsedData = JSON.parse(jsonData);
 
@@ -40,4 +38,3 @@ const getFuncsDetail = function () {
 }
 
 console.log(getFuncsDetail());
-cmd.rm('temp.json')
