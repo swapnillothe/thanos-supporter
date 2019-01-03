@@ -32,9 +32,14 @@ const addFuncsDetail = function (data) {
 }
 
 const getFuncsDetail = function () {
-  let funcData = parsedData.filter(isFunction);
-  let data = addFuncsDetail(funcData);
-  return data.funcsDetails;
+  let fileNames = (Object.keys(parsedData));
+  funcsDetails = {};
+  for (let index = 0; index < fileNames.length; index++) {
+    let funcData = parsedData[fileNames[index]].filter(isFunction);
+    let data = addFuncsDetail(funcData);
+    funcsDetails[fileNames[index]] = data.funcsDetails;
+  }
+  return funcsDetails;
 }
 
 console.log(getFuncsDetail());
